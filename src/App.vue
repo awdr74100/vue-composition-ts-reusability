@@ -1,8 +1,8 @@
 <template>
   <p>Mouse position is at: {{ x }}, {{ y }}</p>
   <p v-if="loading">Loading...</p>
-  <p v-if="error">{{ error }}</p>
-  <ul v-if="data">
+  <p v-else-if="error">Oops! Error encountered: {{ error.message }}</p>
+  <ul v-else>
     <li v-for="(user, index) in data" :key="index">
       <p>編號：{{ user.id }}</p>
       <p>姓名：{{ user.name }}</p>
