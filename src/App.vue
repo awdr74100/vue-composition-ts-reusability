@@ -1,19 +1,14 @@
 <template>
   <p>Mouse position is at: {{ x }}, {{ y }}</p>
-  <ul>
-    <template v-if="!users">
-      <p>Loading...</p>
-    </template>
-    <template v-else-if="error">
-      <p>{{ error.message }}</p>
-    </template>
-    <template v-else>
-      <li v-for="({ id, name, email }, index) in users" :key="index">
-        <p>識別碼：{{ id }}</p>
-        <p>姓名：{{ name }}</p>
-        <p>信箱：{{ email }}</p>
-      </li>
-    </template>
+  <p v-if="loading">Loading...</p>
+  <p v-if="error">{{ error }}</p>
+  <ul v-if="data">
+    <li v-for="(user, index) in data" :key="index">
+      <p>編號：{{ user.id }}</p>
+      <p>姓名：{{ user.name }}</p>
+      <p>電話：{{ user.phone }}</p>
+      <p>信箱：{{ user.email }}</p>
+    </li>
   </ul>
 </template>
 
@@ -27,9 +22,10 @@ interface User {
   id: number;
   name: string;
   email: string;
+  phone: string;
 }
 
-const { data: users, error } = useFetch<User[]>(
+const { data, error, loading } = useFetch<User[]>(
   'https://jsonplaceholder.typicode.com/users',
 );
 </script>
