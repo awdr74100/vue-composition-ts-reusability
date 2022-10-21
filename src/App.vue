@@ -1,15 +1,37 @@
 <template>
-  <button @click.prevent="increment(1)">{{ count }}</button>
+  <p>Mouse position is at: {{ x }}, {{ y }}</p>
+  <ul>
+    <template v-if="!users">
+      <p>Loading...</p>
+    </template>
+    <template v-else-if="error">
+      <p>{{ error.message }}</p>
+    </template>
+    <template v-else>
+      <li v-for="({ id, name, email }, index) in users" :key="index">
+        <p>識別碼：{{ id }}</p>
+        <p>姓名：{{ name }}</p>
+        <p>信箱：{{ email }}</p>
+      </li>
+    </template>
+  </ul>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { useMouse } from '@/composables/useMouse';
+import { useFetch } from '@/composables/useFetch';
 
-const count = ref(0);
+const { x, y } = useMouse();
 
-const increment = (num: number) => {
-  count.value += num;
-};
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+const { data: users, error } = useFetch<User[]>(
+  'https://jsonplaceholder.typicode.com/users',
+);
 </script>
 
 <style></style>
