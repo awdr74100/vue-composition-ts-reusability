@@ -15,15 +15,9 @@
 <script setup lang="ts">
 import { useMouse } from '@/composables/useMouse';
 import { useFetch } from '@/composables/useFetch';
+import type { User } from './types';
 
 const { x, y } = useMouse();
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-}
 
 const { data, error, loading } = useFetch<User[]>(
   'https://jsonplaceholder.typicode.com/users',
