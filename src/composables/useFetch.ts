@@ -19,5 +19,5 @@ export const useFetch = <T>(url: string | Ref<string>) => {
   if (isRef(url)) watchEffect(doFetch);
   else doFetch();
 
-  return { data, error };
+  return { data, error, retry: doFetch };
 };
