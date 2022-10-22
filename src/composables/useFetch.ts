@@ -16,7 +16,6 @@ export const useFetch = <T>(url: string | Ref<string>) => {
     }
   };
 
-  console.log(isRef(url));
   if (isRef(url)) watchEffect(doFetch);
   else doFetch();
 
